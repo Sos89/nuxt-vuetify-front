@@ -1,10 +1,15 @@
 <template>
-
+  <v-row justify="center" align="center">
+    <v-col cols="12" sm="8" md="6">
+      Admin Page
+    </v-col>
+  </v-row>
 </template>
 
 <script>
 export default {
-  name: "index"
+  name: "index",
+  middleware: 'admin-middleware',
 }
 </script>
 

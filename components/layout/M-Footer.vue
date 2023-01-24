@@ -1,13 +1,41 @@
 <template>
-$END$
+  <v-footer padless>
+    <v-col class="text-center" cols="12 indigo">
+      <v-btn v-for="icon in icons" :key="icon" class="mx-4 white--text" icon>
+        <v-icon size="24px">
+          {{ icon }}
+        </v-icon>
+      </v-btn>
+    </v-col>
+    <v-col class="text-center" cols="12 indigo">
+      <v-btn
+        v-for="link in links"
+        :key="link"
+        color="white"
+        text
+        rounded
+        class="my-2"
+      >
+        {{ link }}
+      </v-btn>
+    </v-col>
+
+    <v-col class="text-center" cols="12">
+      {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+    </v-col>
+  </v-footer>
 </template>
 
 <script>
 export default {
-name: "M-Footer"
+  name: 'M-Footer',
+  data() {
+    return {
+      icons: ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram'],
+      links: ['Home', 'About Us', 'Team', 'Services', 'Blog', 'Contact Us'],
+    }
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -16,10 +16,22 @@
                 <v-form ref="loginForm" v-model="valid" lazy-validation>
                   <v-row>
                     <v-col cols="12">
-                      <v-text-field v-model="loginEmail" :rules="loginEmailRules" label="E-mail" required></v-text-field>
+                      <m-input
+                        v-model="loginEmail"
+                        :rules="loginEmailRules"
+                        label="E-mail"
+                        type="email"
+                      />
                     </v-col>
                     <v-col cols="12">
-                      <v-text-field v-model="loginPassword" :append-icon="show1?'eye':'eye-off'" :rules="[rules.required, rules.min]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="Password" hint="At least 8 characters" counter @click:append="show1 = !show1"></v-text-field>
+                      <m-input
+                        :type="show1 ? 'text' : 'password'"
+                        :rules="[rules.required, rules.min]"
+                        label="Password"
+                        v-model="loginPassword"
+                        @click:append="show1 = !show1"
+                        hint="At least 8 characters"
+                      />
                     </v-col>
                     <v-col class="d-flex" cols="12" sm="6" xsm="12">
                     </v-col>
@@ -42,29 +54,6 @@
 import { mapActions } from "vuex";
 export default {
   name: "login",
-  computed: {
-    passwordMatch() {
-      return () => this.password === this.verify || "Password must match";
-    }
-  },
-  methods: {
-    ...mapActions('authcustom', ['loginUser']),
-    validate() {
-      if (this.$refs.loginForm.validate()) {
-        this.loginUser({
-          email: this.loginEmail,
-          password: this.loginPassword
-        })
-      }
-    },
-
-    reset() {
-      this.$refs.form.reset();
-    },
-    resetValidation() {
-      this.$refs.form.resetValidation();
-    }
-  },
   data: () => ({
     dialog: true,
     tab: 0,
@@ -91,7 +80,32 @@ export default {
       required: value => !!value || "Required.",
       min: v => (v && v.length >= 6) || "Min 6 characters"
     }
-  })
+  }),
+  computed: {
+    passwordMatch() {
+      return () => this.password === this.verify || "Password must match";
+    }
+  },
+  methods: {
+    ...mapActions('authcustom', ['loginUser']),
+    validate() {
+      if (this.$refs.loginForm.validate()) {
+        this.loginUser( {
+          data: {
+            email: this.loginEmail,
+            password:this.loginPassword
+          }
+        })
+      }
+    },
+
+    reset() {
+      this.$refs.form.reset();
+    },
+    resetValidation() {
+      this.$refs.form.resetValidation();
+    }
+  },
 }
 </script>
 
