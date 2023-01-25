@@ -19,7 +19,6 @@
         {{ link }}
       </v-btn>
     </v-col>
-
     <v-col class="text-center" cols="12">
       {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
     </v-col>

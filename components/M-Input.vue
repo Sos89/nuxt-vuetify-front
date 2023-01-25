@@ -26,7 +26,6 @@ export default {
     },
     rules: {
       type: Array,
-      required: true
     },
     type: {
       type: String,
