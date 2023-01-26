@@ -9,7 +9,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col v-for="(product, index) of getProducts" :key="index">
+      <v-col v-for="(product, index) of filteredList" :key="index">
         <product-card
           :loading="isLoading"
           @reserve="reset"
@@ -51,7 +51,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('products', ['getProducts'])
+    ...mapGetters('products', ['getProducts']),
+    filteredList() {
+      return this.getProducts.filter(product => {
+        return product.title.toLowerCase().includes(this.searchable.toLowerCase())
+      })
+    }
   },
 
   methods: {

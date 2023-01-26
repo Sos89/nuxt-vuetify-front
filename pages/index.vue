@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <v-row justify="center" align="center">
       <v-col cols="12">
         <m-header page-title="Home" v-model="searchable" :nav-data="navItems" />
@@ -27,7 +27,7 @@
         </product-card>
       </v-col>
     </v-row>
-  </v-app>
+  </div>
 </template>
 
 <script>
