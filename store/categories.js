@@ -23,5 +23,8 @@ export const actions = {
     catch (err){
       commit('setError', err.response.data.errors)
     }
+  },
+  async createCategory({ commit }, name){
+    const { data } = await this.$axios.post('/api/categories', {name: name})
   }
 }

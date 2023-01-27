@@ -12,7 +12,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="6">
+      <v-col xl="6" lg="6" md="6" cols="12">
         <v-card>
           <v-card-text>
             <v-form ref="createForm" v-model="valid">
@@ -33,11 +33,18 @@
               <m-input type="text" label="Title" v-model="form.title" :rules="[rules.required, rules.min]"/>
               <m-input type="text" label="Description" v-model="form.description" :rules="[rules.required, rules.min]"/>
               <m-input type="text" label="Price" v-model="form.price" :rules="numberRules"/>
-              <v-btn @click.prevent="createProd" type="success">Create</v-btn>
+              <v-btn color="success" @click.prevent="createProd" type="success">Create</v-btn>
             </v-form>
           </v-card-text>
         </v-card>
       </v-col>
+      <v-form ref="categoryForm" v-model="validCategory">
+        <v-col xl="6" lg="6" md="6" cols="12">
+          <m-input type="text" label="Category" v-model="category" :rules="[rules.required, rules.min]"/>
+          <v-btn color="success" @click="createCategories">Create Categories</v-btn>
+        </v-col>
+      </v-form>
+
     </v-row>
   </div>
 </template>
@@ -53,6 +60,8 @@ export default {
   data(){
     return {
       valid: true,
+      validCategory: true,
+      category: '',
       form: {
         categories: '',
         title: '',
@@ -91,7 +100,7 @@ export default {
   },
   methods: {
     ...mapActions('products', ['createProduct']),
-    ...mapActions('categories', ['fetchCategories']),
+    ...mapActions('categories', ['fetchCategories', 'createCategory']),
     ...mapMutations('products', ['setError']),
     onImageChange(e) {
       this.form.image = e.target.files[0];
@@ -148,6 +157,28 @@ export default {
             this.form.price = ''
             this.form.categories = ''
             this.$router.push('/admin')
+          },3000)
+        }else{
+          this.errorMessage()
+        }
+      }
+    },
+
+    async createCategories() {
+      if (this.$refs.categoryForm.validate()) {
+        // let formData = new FormData();
+        // formData.append('image', this.form.image);
+        // formData.append('title', this.form.title);
+        // formData.append('description', this.form.description);
+        // formData.append('price', this.form.price);
+        // formData.append('categories', this.form.categories);
+
+        const isCreatedCategory = await this.createCategory(this.category)
+        if (isCreatedCategory) {
+          this.message()
+          setTimeout(() => {
+            this.category = ''
+            // this.$router.push('/admin')
           },3000)
         }else{
           this.errorMessage()
