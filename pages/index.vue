@@ -4,9 +4,6 @@
       <v-col cols="12">
         <m-header page-title="Home" v-model="searchable" :nav-data="navItems" />
       </v-col>
-      <v-col cols="12" sm="8" md="6">
-        <notifications type="error" group="foo" position="top right" />
-      </v-col>
     </v-row>
     <v-row>
       <v-col v-for="(product, index) of getProducts" :key="index">

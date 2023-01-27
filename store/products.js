@@ -1,7 +1,8 @@
 export const state = () => ({
   products: null,
   product: null,
-  error: null
+  error: null,
+  category: null
 })
 
 export const getters = {
@@ -13,6 +14,9 @@ export const getters = {
   },
   getError(state) {
     return state.error
+  },
+  getCategory(state){
+    return state.category
   }
 }
 
@@ -25,6 +29,9 @@ export const mutations = {
   },
   setError(state, error){
     state.error = error
+  },
+  setCategories(state, category){
+    state.category = category
   }
 }
 
@@ -46,7 +53,7 @@ export const actions = {
       console.log(err)
     }
   },
-  async fetchOneProduct( { commit }, id){
+  async editProduct( { commit }, id){
     try {
       const {data} = await this.$axios.get(`/api/products/${id}`)
       commit('setOneProduct', data.data)
@@ -54,12 +61,12 @@ export const actions = {
       console.log(err.response.data, 'sdf')
     }
   },
-  async deleteFindProduct({commit}, id){
+  async deleteProduct({commit}, id){
     try {
       const response = await this.$axios.delete(`/api/products/${id}`)
     }
     catch (err){
       commit('setError', err.response.data.errors)
     }
-  }
+  },
 }

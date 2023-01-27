@@ -6,6 +6,12 @@
       </v-col>
     </v-row>
     <v-row>
+      <v-col cols="12" sm="8" md="6">
+        <notifications type="success" group="created" position="top center" />
+        <notifications type="error" group="error" position="top center" />
+      </v-col>
+    </v-row>
+    <v-row>
       <v-col cols="6">
         <v-card>
           <v-card-text>
@@ -59,7 +65,7 @@ export default {
         { title: 'Home', linkTo: '/admin' },
         { title: 'Create Product', linkTo: '/admin/create' }
       ],
-      items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+      items: [],
       rules: {
         required: value => !!value || "This field may not be empty.",
         min: v => (v && v.length >= 3) || "Min 3 characters"
@@ -75,13 +81,54 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapGetters('categories', ['getCategory'])
+  },
+  async mounted() {
+    await this.fetchCategories()
+    console.log(this.getCategory)
+    this.selectItems()
+  },
   methods: {
     ...mapActions('products', ['createProduct']),
+    ...mapActions('categories', ['fetchCategories']),
     ...mapMutations('products', ['setError']),
     onImageChange(e) {
       this.form.image = e.target.files[0];
     },
 
+    selectItems(){
+      for (let item of this.getCategory){
+        this.items.push({
+          text: item.name,
+          value: item.id
+        })
+        console.log(this.items, 'items')
+      }
+    },
+
+    message(){
+      this.$notify({
+        group: 'created',
+        title: 'Product created',
+        text: '',
+        type: 'success',
+        duration: 3000,
+        speed: 1000,
+        data: {}
+      })
+    },
+    errorMessage(){
+      this.$notify({
+        group: 'error',
+        title: 'Product created',
+        text: '',
+        type: 'error',
+        duration: 3000,
+        speed: 1000,
+        data: {}
+      })
+    },
 
     async createProd() {
       if (this.$refs.createForm.validate()) {
@@ -94,11 +141,16 @@ export default {
 
         const isCreated = await this.createProduct(formData)
         if (isCreated) {
-          this.form.title = ''
-          this.form.description = ''
-          this.form.price = ''
-          this.form.categories = ''
-          this.$router.push('/admin')
+          this.message()
+          setTimeout(() => {
+            this.form.title = ''
+            this.form.description = ''
+            this.form.price = ''
+            this.form.categories = ''
+            this.$router.push('/admin')
+          },3000)
+        }else{
+          this.errorMessage()
         }
       }
     }
