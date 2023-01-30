@@ -2,7 +2,8 @@ export const state = () => ({
   products: null,
   product: null,
   error: null,
-  category: null
+  category: null,
+  basket: []
 })
 
 export const getters = {
@@ -17,6 +18,9 @@ export const getters = {
   },
   getCategory(state){
     return state.category
+  },
+  getBasket(state) {
+    return state.basket
   }
 }
 
@@ -32,6 +36,36 @@ export const mutations = {
   },
   setCategories(state, category){
     state.category = category
+  },
+  setReserve(state, product){
+    this._vm.$set(product, 'quantity', 1)
+    let productExist = false
+    if (state.basket.length){
+      state.basket.map((item)=>{
+        if (item.id === product.id){
+          productExist = true
+          item.quantity++
+        }
+      })
+      if (!productExist){
+        state.basket.push(product)
+        product.quantity = 1
+      }
+    }else{
+      state.basket.push(product)
+      product.quantity = 1
+    }
+  },
+  setMinusProduct(state, index){
+    if (state.basket[index].quantity > 1){
+      state.basket[index].quantity--
+    }
+  },
+  setPlusProduct(state, index){
+    state.basket[index].quantity++
+  },
+  setDestroyedProduct(state, index){
+    state.basket.splice(index, 1)
   }
 }
 
@@ -69,4 +103,16 @@ export const actions = {
       commit('setError', err.response.data.errors)
     }
   },
+  reserveProduct({commit}, product) {
+    commit('setReserve', product)
+  },
+  minusProduct({commit}, index){
+    commit('setMinusProduct', index)
+  },
+  plusProduct({commit}, index){
+    commit('setPlusProduct', index)
+  },
+  destroyFromBasket({commit}, index){
+    commit('setDestroyedProduct', index)
+  }
 }

@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-footer>
+    <v-footer :padless="padless">
       <v-col class="text-center" cols="12 indigo">
         <v-btn v-for="icon in icons" :key="icon" class="mx-4 white--text" icon>
           <v-icon size="24px">
@@ -34,6 +34,7 @@ export default {
     return {
       icons: ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram'],
       links: ['Home', 'About Us', 'Team', 'Services', 'Blog', 'Contact Us'],
+      padless: true,
     }
   },
 }

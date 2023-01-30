@@ -4,9 +4,7 @@
       <v-app-bar elevation="3" color="indigo" class="mb-5">
         <v-col xl="6" lg="6" md="6" cols="12" class="d-flex">
           <v-toolbar-items v-for="(item, index) of navData" :key="index">
-            <nuxt-link class="nav_title mx-2" :to="item.linkTo">{{
-              item.title
-            }}</nuxt-link>
+            <nuxt-link class="nav_title mx-2" :to="item.linkTo">{{ item.title }}</nuxt-link>
           </v-toolbar-items>
         </v-col>
         <v-col
@@ -44,7 +42,7 @@
                 </v-btn>
               </template>
               <v-btn dark icon>
-                <v-icon>mdi-shopping</v-icon>
+                <v-icon @click="$emit('clickBars')">mdi-shopping</v-icon>
               </v-btn>
             </v-col>
           </v-toolbar-items>

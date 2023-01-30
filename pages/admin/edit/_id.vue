@@ -81,7 +81,7 @@ export default {
     message(){
       this.$notify({
         group: 'created',
-        title: 'Product created',
+        title: 'Product deleted',
         text: '',
         type: 'success',
         duration: 3000,
@@ -92,7 +92,7 @@ export default {
     errorMessage(){
       this.$notify({
         group: 'error',
-        title: 'Product created',
+        title: 'Field',
         text: '',
         type: 'error',
         duration: 3000,

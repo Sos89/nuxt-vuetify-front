@@ -95,7 +95,6 @@ export default {
   },
   async mounted() {
     await this.fetchCategories()
-    console.log(this.getCategory)
     this.selectItems()
   },
   methods: {
@@ -112,7 +111,6 @@ export default {
           text: item.name,
           value: item.id
         })
-        console.log(this.items, 'items')
       }
     },
 
