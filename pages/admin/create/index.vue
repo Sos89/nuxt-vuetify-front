@@ -30,21 +30,62 @@
                 v-model="form.categories"
                 :rules="selectRules"
               ></v-select>
-              <m-input type="text" label="Title" v-model="form.title" :rules="[rules.required, rules.min]"/>
-              <m-input type="text" label="Description" v-model="form.description" :rules="[rules.required, rules.min]"/>
-              <m-input type="text" label="Price" v-model="form.price" :rules="numberRules"/>
-              <v-btn color="success" @click.prevent="createProd" type="success">Create</v-btn>
+              <m-input
+                type="text"
+                label="Title"
+                v-model="form.title"
+                :rules="[rules.required, rules.min]"
+              />
+              <m-input
+                type="text"
+                label="Description"
+                v-model="form.description"
+                :rules="[rules.required, rules.min]"
+              />
+              <m-input
+                type="text"
+                label="Price"
+                v-model="form.price"
+                :rules="numberRules"
+              />
+              <v-btn color="success" @click.prevent="createProd" type="success"
+                >Create</v-btn
+              >
             </v-form>
           </v-card-text>
         </v-card>
       </v-col>
-      <v-form ref="categoryForm" v-model="validCategory">
-        <v-col xl="6" lg="6" md="6" cols="12">
-          <m-input type="text" label="Category" v-model="category" :rules="[rules.required, rules.min]"/>
-          <v-btn color="success" @click="createCategories">Create Categories</v-btn>
-        </v-col>
-      </v-form>
-
+      <v-col xl="6" lg="6" md="6" cols="12">
+        <v-card>
+          <v-card-text>
+            <v-form ref="categoryForm" v-model="validCategory">
+              <v-file-input
+                accept="image/*"
+                label="File input"
+                @click="onCategoryImageChange"
+                v-model="categoryForm.image"
+                :rules="fileRules"
+                multiple
+              ></v-file-input>
+              <m-input
+                type="text"
+                label="Category"
+                v-model="categoryForm.name"
+                :rules="[rules.required, rules.min]"
+              />
+              <m-input
+                type="text"
+                label="Description"
+                v-model="categoryForm.description"
+                :rules="[rules.required, rules.min]"
+              />
+              <v-btn color="success" @click="createCategories"
+                >Create Categories</v-btn
+              >
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -52,12 +93,12 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 import MHeader from '~/components/layout/M-Header'
-import MInput from "@/components/M-Input";
+import MInput from '@/components/M-Input'
 export default {
-  name: "index",
+  name: 'index',
   middleware: 'admin-middleware',
-  components: {MHeader, MInput},
-  data(){
+  components: { MHeader, MInput },
+  data() {
     return {
       valid: true,
       validCategory: true,
@@ -68,30 +109,35 @@ export default {
         image: [],
         description: '',
         price: '',
-        quantity: ''
+        quantity: '',
+      },
+      categoryForm: {
+        image: '',
+        name: '',
+        description: '',
       },
       navItems: [
         { title: 'Home', linkTo: '/admin' },
-        { title: 'Create Product', linkTo: '/admin/create' }
+        { title: 'Create Product', linkTo: '/admin/create' },
       ],
       items: [],
       rules: {
-        required: value => !!value || "This field may not be empty.",
-        min: v => (v && v.length >= 3) || "Min 3 characters"
+        required: (value) => !!value || 'This field may not be empty.',
+        min: (v) => (v && v.length >= 3) || 'Min 3 characters',
       },
       fileRules: [
-        v => !!v || 'File is required',
-        v => (v && v.size > 0) || 'File is required',
+        (v) => !!v || 'File is required',
+        (v) => (v && v.size > 0) || 'File is required',
       ],
-      selectRules: [(v) => !!v || "Item is required"],
+      selectRules: [(v) => !!v || 'Item is required'],
       numberRules: [
-        v => v.length > 0 || 'This field may not be empty',
-        v => v > 0 || 'The value must be greater than zero'
-      ]
+        (v) => v.length > 0 || 'This field may not be empty',
+        (v) => v > 0 || 'The value must be greater than zero',
+      ],
     }
   },
   computed: {
-    ...mapGetters('categories', ['getCategory'])
+    ...mapGetters('categories', ['getCategory']),
   },
   async mounted() {
     await this.fetchCategories()
@@ -102,19 +148,22 @@ export default {
     ...mapActions('categories', ['fetchCategories', 'createCategory']),
     ...mapMutations('products', ['setError']),
     onImageChange(e) {
-      this.form.image = e.target.files[0];
+      this.form.image = e.target.files[0]
+    },
+    onCategoryImageChange(e) {
+      this.categoryForm.image = e.target.files[0]
     },
 
-    selectItems(){
-      for (let item of this.getCategory){
+    selectItems() {
+      for (let item of this.getCategory) {
         this.items.push({
           text: item.name,
-          value: item.id
+          value: item.id,
         })
       }
     },
 
-    message(){
+    message() {
       this.$notify({
         group: 'created',
         title: 'Product created',
@@ -122,29 +171,29 @@ export default {
         type: 'success',
         duration: 3000,
         speed: 1000,
-        data: {}
+        data: {},
       })
     },
-    errorMessage(){
+    errorMessage() {
       this.$notify({
         group: 'error',
-        title: 'Product created',
+        title: 'Field',
         text: '',
         type: 'error',
         duration: 3000,
         speed: 1000,
-        data: {}
+        data: {},
       })
     },
 
     async createProd() {
       if (this.$refs.createForm.validate()) {
-        let formData = new FormData();
-        formData.append('image', this.form.image);
-        formData.append('title', this.form.title);
-        formData.append('description', this.form.description);
-        formData.append('price', this.form.price);
-        formData.append('categories', this.form.categories);
+        let formData = new FormData()
+        formData.append('image', this.form.image)
+        formData.append('title', this.form.title)
+        formData.append('description', this.form.description)
+        formData.append('price', this.form.price)
+        formData.append('categories', this.form.categories)
 
         const isCreated = await this.createProduct(formData)
         if (isCreated) {
@@ -155,8 +204,8 @@ export default {
             this.form.price = ''
             this.form.categories = ''
             this.$router.push('/admin')
-          },3000)
-        }else{
+          }, 3000)
+        } else {
           this.errorMessage()
         }
       }
@@ -164,29 +213,28 @@ export default {
 
     async createCategories() {
       if (this.$refs.categoryForm.validate()) {
-        // let formData = new FormData();
-        // formData.append('image', this.form.image);
-        // formData.append('title', this.form.title);
-        // formData.append('description', this.form.description);
-        // formData.append('price', this.form.price);
-        // formData.append('categories', this.form.categories);
+        let formData = new FormData();
+        formData.append('image', this.categoryForm.image);
+        formData.append('description', this.categoryForm.description);
+        formData.append('name', this.categoryForm.name);
 
-        const isCreatedCategory = await this.createCategory(this.category)
-        if (isCreatedCategory) {
+        const isCategory = await this.createCategory(formData)
+
+        if (isCategory) {
           this.message()
           setTimeout(() => {
-            this.category = ''
-            // this.$router.push('/admin')
-          },3000)
-        }else{
+            this.categoryForm.name = ''
+            this.categoryForm.image = ''
+            this.categoryForm.description = ''
+            this.$router.push('/admin')
+          }, 3000)
+        } else {
           this.errorMessage()
         }
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
