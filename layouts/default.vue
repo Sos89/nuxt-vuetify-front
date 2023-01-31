@@ -1,9 +1,7 @@
 <template>
   <v-app dark>
     <v-main>
-<!--      <v-container-fluid>-->
-        <Nuxt />
-<!--      </v-container-fluid>-->
+      <Nuxt />
     </v-main>
     <m-footer/>
   </v-app>

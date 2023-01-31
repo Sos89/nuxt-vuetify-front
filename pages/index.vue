@@ -11,49 +11,52 @@
       </v-col>
     </v-row>
     <v-row v-if="isBasket" class="basket_content">
-      <v-banner elevation="24">
-        <v-row>
-          <v-col>
-            <v-btn @click="closeBasket" icon>
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col v-for="(product, index) of getBasket" :key="product.id" class="d-flex align-center">
-            <div>
-              <v-img
-                :src="`http://127.0.0.1:8000/images/${product.image}`"
-                max-width="100px"
-                height="100px"
-              ></v-img>
-            </div>
-            <v-col class="d-flex align-center">
-              <div class="quantity mx-1">
-                <v-btn @click="minus(index)" icon small>
-                  <v-icon>mdi-minus</v-icon>
-                </v-btn>
-                <span class="mx-1"> {{ product.quantity }}</span>
-                <v-btn @click="plus(index)" icon small>
-                  <v-icon>mdi-plus</v-icon>
-                </v-btn>
-              </div>
-              <div class="basketPrice mx-1">x {{ product.price }}</div>
-              <v-btn @click="deleteProductFromBasket(index)" class="mx-2" icon small>
-                <v-icon color="red">mdi-delete</v-icon>
+      <v-expand-transition>
+        <v-banner elevation="24" min-width="370px">
+          <v-row>
+            <v-col>
+              <v-btn @click="closeBasket" icon>
+                <v-icon>mdi-close</v-icon>
               </v-btn>
             </v-col>
-          </v-col>
-        </v-row>
-        <v-row class="d-flex align-center flex-column" v-if="getBasket.length > 0">
-          <v-col>
-            Total: {{ basketTotal }}
-          </v-col>
-          <v-col>
-            <v-btn>Checkout</v-btn>
-          </v-col>
-        </v-row>
-      </v-banner>
+          </v-row>
+          <v-row>
+            <v-col v-for="(product, index) of getBasket" :key="product.id" class="d-flex align-center">
+              <div>
+                <v-img
+                  :src="`http://127.0.0.1:8000/images/${product.image}`"
+                  max-width="100px"
+                  height="100px"
+                ></v-img>
+              </div>
+              <v-col class="d-flex align-center">
+                <div class="quantity mx-1">
+                  <v-btn @click="minus(index)" icon small>
+                    <v-icon>mdi-minus</v-icon>
+                  </v-btn>
+                  <span class="mx-1"> {{ product.quantity }}</span>
+                  <v-btn @click="plus(index)" icon small>
+                    <v-icon>mdi-plus</v-icon>
+                  </v-btn>
+                </div>
+                <div class="basketPrice mx-1">x {{ product.price }}</div>
+                <v-btn @click="deleteProductFromBasket(index)" class="mx-2" icon small>
+                  <v-icon color="red">mdi-delete</v-icon>
+                </v-btn>
+              </v-col>
+            </v-col>
+          </v-row>
+          <v-row class="d-flex align-center flex-column" v-if="getBasket.length > 0">
+            <v-col>
+              Total: {{ basketTotal }}
+            </v-col>
+            <v-col>
+              <v-btn>Checkout</v-btn>
+            </v-col>
+          </v-row>
+        </v-banner>
+      </v-expand-transition>
+
     </v-row>
     <v-row>
       <v-col v-for="(product, index) of filteredList" :key="index">
@@ -91,9 +94,9 @@ export default {
     return {
       searchable: '',
       navItems: [
-        { title: 'Home', linkTo: '#' },
+        { title: 'Home', linkTo: '/' },
         { title: 'About Us', linkTo: '#' },
-        { title: 'Team', linkTo: '#' },
+        { title: 'Categories', linkTo: '/category' },
         { title: 'Services', linkTo: '#' },
         { title: 'Blog', linkTo: '#' },
         { title: 'Contact Us', linkTo: '#' },

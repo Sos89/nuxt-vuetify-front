@@ -112,13 +112,14 @@ export default {
         quantity: '',
       },
       categoryForm: {
-        image: '',
+        image: [],
         name: '',
         description: '',
       },
       navItems: [
         { title: 'Home', linkTo: '/admin' },
         { title: 'Create Product', linkTo: '/admin/create' },
+        { title: 'Categories', linkTo: '/admin/category'}
       ],
       items: [],
       rules: {

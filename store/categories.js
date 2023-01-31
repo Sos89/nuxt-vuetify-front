@@ -18,7 +18,7 @@ export const actions = {
   async fetchCategories({ commit }){
     try {
       const { data } = await this.$axios.get('/api/categories', )
-      commit('setCategories', data)
+      commit('setCategories', data.data)
       return true
 
     }

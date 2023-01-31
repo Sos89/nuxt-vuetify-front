@@ -56,6 +56,7 @@ export default {
       navItems: [
         { title: 'Home', linkTo: '/admin' },
         { title: 'Create Product', linkTo: '/admin/create' },
+        { title: 'Categories', linkTo: '/admin/category'}
       ],
       isLoading: false,
     }
