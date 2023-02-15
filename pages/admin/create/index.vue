@@ -96,7 +96,7 @@ import MHeader from '~/components/layout/M-Header'
 import MInput from '@/components/M-Input'
 export default {
   name: 'index',
-  middleware: 'admin-middleware',
+  middleware: ['auth'],
   components: { MHeader, MInput },
   data() {
     return {

@@ -32,6 +32,7 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'index',
+  middleware: ['auth'],
   data(){
     return {
       items: [],

@@ -6,7 +6,8 @@
           page-title="Home"
           v-model="searchable"
           :nav-data="navItems"
-          @clickBars="dd"
+          @clickBars="showBasket"
+          :shop-total="getBasket.length"
         />
       </v-col>
     </v-row>
@@ -142,7 +143,7 @@ export default {
     reset(product) {
       this.reserveProduct(product)
     },
-    dd() {
+    showBasket() {
       this.isBasket = !this.isBasket
     },
     closeBasket() {

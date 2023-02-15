@@ -53,7 +53,7 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'edit-product',
-  middleware: 'admin-middleware',
+  middleware: ['auth'],
   data() {
     return {
       isImage: false,

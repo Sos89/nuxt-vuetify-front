@@ -30,19 +30,17 @@
               <v-btn dark icon>
                 <v-icon @click="search">mdi-magnify</v-icon>
               </v-btn>
-              <div class="userName">{{ $auth.user.name }}</div>
               <template v-if="$auth.loggedIn">
+                <div class="userName">{{ $auth.user.name }}</div>
                 <v-btn dark icon @click.prevent="logout">
                   <v-icon>mdi-logout</v-icon>
                 </v-btn>
               </template>
-              <template v-else>
-                <v-btn dark icon>
-                  <v-icon @click="toLogin">mdi-account</v-icon>
-                </v-btn>
-              </template>
               <v-btn dark icon>
-                <v-icon @click="$emit('clickBars')">mdi-shopping</v-icon>
+                <div class="basketTotal">
+                  <v-icon @click="$emit('clickBars')">mdi-shopping</v-icon>
+                  {{shopTotal}}
+                </div>
               </v-btn>
             </v-col>
           </v-toolbar-items>
@@ -65,6 +63,9 @@ export default {
     navData: {
       type: Array,
     },
+    shopTotal: {
+      type: Number
+    }
   },
   data() {
     return {
@@ -78,7 +79,7 @@ export default {
     },
     async logout() {
       await this.$auth.logout()
-      this.$router.push('/login')
+      this.$router.push('/')
       // this.$notify({
       //   group: 'foo',
       //   title: 'This is the <em>title</em>',
@@ -114,4 +115,7 @@ export default {
   font-style: italic;
   font-family: 'Bitstream Charter';
 }
+/*.basketTotal{*/
+/*  border: 2px solid red;*/
+/*}*/
 </style>

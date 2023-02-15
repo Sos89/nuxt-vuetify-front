@@ -4,10 +4,11 @@
 
     <v-row>
       <v-col v-for="category of getCategory">
-        <v-card>
+        <v-card >
           <v-img
             :src="`http://127.0.0.1:8000/category-images/${category.image}`"
             height="200px"
+            max-width="300px"
           ></v-img>
 
           <v-card-title> {{ category.name }} </v-card-title>

@@ -1,9 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
-  router: {
-    middleware: ['auth']
-  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - nuxt-vuetifyjs',
@@ -33,7 +30,7 @@ export default {
           login: '/login',
           register: '/register',
           logout: '/',
-          callback: '/login',
+          // callback: '/',
           home: '/'
         },
         cookie: {

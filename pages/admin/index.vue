@@ -45,7 +45,7 @@ import { mapActions, mapGetters } from 'vuex'
 import MHeader from '~/components/layout/M-Header'
 export default {
   name: 'IndexPage',
-  middleware: 'admin-middleware',
+  middleware: ['auth'],
   components: { MHeader },
   async fetch() {
     await this.fetchProducts()
